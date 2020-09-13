@@ -28,7 +28,7 @@ class AlarmTriggeredView : BaseAlarmView {
     var listener: ViewListener? = null
 
     interface ViewListener {
-        fun onComplete()
+        fun onComplete(code: Int)
         fun onError()
     }
 
@@ -82,15 +82,15 @@ class AlarmTriggeredView : BaseAlarmView {
 
     private fun validateCode(validateCode: String) {
         val codeInt = validateCode.toInt()
-        if (codeInt == currentCode) {
+        //if (codeInt == currentCode) {
             if (listener != null) {
-                listener!!.onComplete()
+                listener!!.onComplete(codeInt)
             }
-        } else {
-            if (listener != null) {
-                listener!!.onError()
-            }
-        }
+        //} else {
+        ///    if (listener != null) {
+        //        listener!!.onError()
+        //    }
+        //}
         reset()
     }
 }

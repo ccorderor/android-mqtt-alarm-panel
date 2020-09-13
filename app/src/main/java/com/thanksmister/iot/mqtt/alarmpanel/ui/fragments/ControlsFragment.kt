@@ -70,7 +70,7 @@ class ControlsFragment : BaseFragment() {
     interface OnControlsFragmentListener {
         fun publishArmedHome()
         fun publishArmedAway()
-        fun publishDisarmed()
+        fun publishDisarmed(value: Int)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -281,7 +281,7 @@ class ControlsFragment : BaseFragment() {
     private fun showAlarmDisableDialog(delayTime: Int) {
         dialogUtils.showAlarmDisableDialog(activity as BaseActivity, object : AlarmDisableView.ViewListener {
             override fun onComplete(code: Int) {
-                mListener!!.publishDisarmed()
+                mListener!!.publishDisarmed(code)
                 dialogUtils.clearDialogs()
             }
             override fun onError() {

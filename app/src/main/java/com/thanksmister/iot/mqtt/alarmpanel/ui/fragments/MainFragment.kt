@@ -53,7 +53,7 @@ class MainFragment : BaseFragment() {
 
     interface OnMainFragmentListener {
         fun manuallyLaunchScreenSaver()
-        fun publishDisarmed()
+        fun publishDisarmed(value: Int)
         fun navigatePlatformPanel()
     }
 
@@ -186,7 +186,7 @@ class MainFragment : BaseFragment() {
             if(delayTime > 0) {
                 dialogUtils.showAlarmDisableDialog(it as BaseActivity, object : AlarmDisableView.ViewListener {
                     override fun onComplete(code: Int) {
-                        listener?.publishDisarmed()
+                        listener?.publishDisarmed(code)
                         dialogUtils.clearDialogs()
                     }
                     override fun onError() {
@@ -211,8 +211,8 @@ class MainFragment : BaseFragment() {
             disarmView.setUseSound(configuration.systemSounds)
             disarmView.useFingerprint = configuration.fingerPrint
             disarmView.listener = object : AlarmTriggeredView.ViewListener {
-                override fun onComplete() {
-                    listener?.publishDisarmed()
+                override fun onComplete(code: Int) {
+                    listener?.publishDisarmed(code)
                 }
                 override fun onError() {
                     Toast.makeText(it, R.string.toast_code_invalid, Toast.LENGTH_SHORT).show()

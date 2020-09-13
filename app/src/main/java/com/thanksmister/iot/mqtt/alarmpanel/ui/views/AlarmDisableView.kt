@@ -133,15 +133,15 @@ class AlarmDisableView : BaseAlarmView {
 
     private fun validateCode(validateCode: String) {
         val codeInt = Integer.parseInt(validateCode)
-        if (codeInt == currentCode) {
+       // if (codeInt == currentCode) {
             countDownTimer?.cancel()
             countDownTimer = null
-            alarmListener?.onComplete(currentCode)
-        } else {
-            codeComplete = false
-            enteredCode = ""
-            showFilledPins(0)
-            alarmListener?.onError()
-        }
+            alarmListener?.onComplete(codeInt)
+       // } else {
+       //     codeComplete = false
+       //     enteredCode = ""
+       //     showFilledPins(0)
+       //     alarmListener?.onError()
+        // }
     }
 }

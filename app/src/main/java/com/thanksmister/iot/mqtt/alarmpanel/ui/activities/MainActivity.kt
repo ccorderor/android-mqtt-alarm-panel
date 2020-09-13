@@ -92,6 +92,7 @@ class MainActivity : BaseActivity(), ViewPager.OnPageChangeListener, ControlsFra
         view_pager.addOnPageChangeListener(this)
         view_pager.setPagingEnabled(false)
 
+        /**
        if(BuildConfig.DEBUG) {
             configuration.alarmCode = BuildConfig.ALARM_CODE
             mqttOptions.setBroker(BuildConfig.BROKER)
@@ -111,6 +112,7 @@ class MainActivity : BaseActivity(), ViewPager.OnPageChangeListener, ControlsFra
             configuration.setShowWeatherModule(true)
             configuration.setTssModule(true)
         }
+       */
 
         if (configuration.isFirstTime) {
             alertDialog = AlertDialog.Builder(this@MainActivity, R.style.CustomAlertDialog)
@@ -326,7 +328,7 @@ class MainActivity : BaseActivity(), ViewPager.OnPageChangeListener, ControlsFra
     override fun publishArmedHome() {
         Timber.d("publishArmedHome")
         val intent = Intent(AlarmPanelService.BROADCAST_EVENT_ALARM_MODE)
-        intent.putExtra(AlarmPanelService.BROADCAST_EVENT_ALARM_MODE, AlarmUtils.COMMAND_ARM_HOME)
+        intent.putExtra(AlarmPanelService.BROADCAST_EVENT_ALARM_MODE, "{\"command\": \""+AlarmUtils.COMMAND_ARM_HOME+"\"}")
         val bm = LocalBroadcastManager.getInstance(applicationContext)
         bm.sendBroadcast(intent)
     }
@@ -334,15 +336,15 @@ class MainActivity : BaseActivity(), ViewPager.OnPageChangeListener, ControlsFra
     override fun publishArmedAway() {
         Timber.d("publishArmedAway")
         val intent = Intent(AlarmPanelService.BROADCAST_EVENT_ALARM_MODE)
-        intent.putExtra(AlarmPanelService.BROADCAST_EVENT_ALARM_MODE, AlarmUtils.COMMAND_ARM_AWAY)
+        intent.putExtra(AlarmPanelService.BROADCAST_EVENT_ALARM_MODE, "{\"command\": \""+AlarmUtils.COMMAND_ARM_AWAY+"\"}")
         val bm = LocalBroadcastManager.getInstance(applicationContext)
         bm.sendBroadcast(intent)
     }
 
-    override fun publishDisarmed() {
+    override fun publishDisarmed(value: Int) {
         Timber.d("publishDisarmed")
         val intent = Intent(AlarmPanelService.BROADCAST_EVENT_ALARM_MODE)
-        intent.putExtra(AlarmPanelService.BROADCAST_EVENT_ALARM_MODE, AlarmUtils.COMMAND_DISARM)
+        intent.putExtra(AlarmPanelService.BROADCAST_EVENT_ALARM_MODE, "{\"command\": \""+AlarmUtils.COMMAND_DISARM+"\", \"value\":\""+value+"\"}")
         val bm = LocalBroadcastManager.getInstance(applicationContext)
         bm.sendBroadcast(intent)
     }
